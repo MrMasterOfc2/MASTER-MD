@@ -1,4 +1,4 @@
-FROM node:lts
+FROM node:lts-buster
 
 RUN apt-get update && \
   apt-get install -y \
@@ -8,10 +8,14 @@ RUN apt-get update && \
   apt-get upgrade -y && \
   npm i pm2 -g && \
   rm -rf /var/lib/apt/lists/*
+  
+RUN git clone https://github.com/djalega8000/Zokou-2.0  /root/Zokou_BOt
+WORKDIR /root/Zokou_Bot/
 
-WORKDIR /app
 
 COPY package.json .
+run npm install -g npm@10.2.4
+RUN npm install pm2 -g
 RUN npm install --legacy-peer-deps
 
 COPY . .
